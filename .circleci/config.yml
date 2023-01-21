@@ -6,8 +6,7 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-          path: ~/project/frontend
-      # - run: cd frontend
+      - run: cd ./frontend
       - run:
           name: "install frontend dependencies"
           command: npm install
@@ -18,8 +17,7 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-          path: ~/project/backend
-      # - run: cd backend
+      - run: cd ./backend
       - run: npm install
       - run: npm run build
 
