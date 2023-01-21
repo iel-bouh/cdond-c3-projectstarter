@@ -1,1 +1,28 @@
 version: 2.1
+
+jobs:
+  build-frontend:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - run: cd frontend
+      - run:
+        name: "install frontend dependencied"
+        command: npm install
+      - run: npm run build
+
+  build-backend:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - run: cd backend
+      - run: npm install
+      - run: npm run build
+
+workflows:
+  default:
+    jobs:
+      - build-frontend
+      - build-backend
