@@ -2,25 +2,25 @@ version: 2.1
 
 jobs:
   build-frontend:
-    working_directory: ~/project/frontend
+    # working_directory: ~/project/frontend
     docker:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      # - run: cd ./frontend
+       - run: pwd; ls;cd ./frontend
       - run:
           name: "install frontend dependencies"
           command: npm install
       - run: npm run build
 
   build-backend:
-    working_directory: ~/project/backend
+    # working_directory: ~/project/backend
 
     docker:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      # - run: cd ./backend
+      - run: pwd; ls; cd ./backend
       - run: npm install
       - run: npm run build
 
