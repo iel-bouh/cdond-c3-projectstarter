@@ -8,8 +8,8 @@ jobs:
       - checkout
       - run: cd frontend
       - run:
-        name: "install frontend dependencied"
-        command: npm install
+          name: "install frontend dependencied"
+          command: npm install
       - run: npm run build
 
   build-backend:
