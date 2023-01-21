@@ -8,11 +8,9 @@ jobs:
     steps:
       - checkout
       - run: |
-          pwd ; ls
-      - run:
-          name: "install frontend dependencies"
-          command: npm install
-      - run: npm run build
+          cd frontend
+          npm install
+          npm run build
 
   build-backend:
     # working_directory: ~/project/backend
@@ -22,9 +20,9 @@ jobs:
     steps:
       - checkout
       - run: |
-          pwd ; ls
-      - run: npm install
-      - run: npm run build
+          cd backend
+          npm install
+          npm run build
 
 workflows:
   default:
