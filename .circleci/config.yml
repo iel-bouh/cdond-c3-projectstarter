@@ -2,7 +2,6 @@ version: 2.1
 
 jobs:
   build-frontend:
-    # working_directory: ~/project/frontend
     docker:
       - image: circleci/node:13.8.0
     steps:
@@ -13,8 +12,6 @@ jobs:
           npm run build
 
   build-backend:
-    # working_directory: ~/project/backend
-
     docker:
       - image: circleci/node:13.8.0
     steps:
@@ -24,8 +21,29 @@ jobs:
           npm install
           npm run build
 
+  test-frontend:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - run: |
+          cd frontend
+          npm install
+          npm run test
+  test-backend:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - run: |
+          cd backend
+          npm install
+          npm run test
+
 workflows:
   default:
     jobs:
       - build-frontend
       - build-backend
+      - test-frontend
+      - test-backend
