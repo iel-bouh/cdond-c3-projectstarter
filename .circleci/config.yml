@@ -60,7 +60,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-        keys: [frontend-build]
+          keys: [frontend-build]
       - run: |
           cd frontend
           npm audit --audit-level=critical
@@ -71,7 +71,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-        keys: [backend-build]
+          keys: [backend-build]
       - run: |
           cd backend
           npm audit --audit-level=critical
