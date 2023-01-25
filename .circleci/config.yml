@@ -141,14 +141,15 @@ jobs:
 
               ",
             ]
-      - attach_workspace:
-          at: project/.circleci/ansible/inventory.txt
       - run:
           name: "install dependencies"
           command: |
             apk update
 
             apk add tar gzip aws-cli ansible
+
+      - attach_workspace:
+          at: ~/project/.circleci/ansible/inventory.txt
       - run:
           name: "run playbook"
           command: |
