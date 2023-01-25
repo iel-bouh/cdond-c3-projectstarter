@@ -141,7 +141,7 @@ jobs:
 
               ",
             ]
-      - attache_workspace:
+      - attach_workspace:
           at: project/.circleci/ansible/inventory.txt
       - run:
           name: "install dependencies"
