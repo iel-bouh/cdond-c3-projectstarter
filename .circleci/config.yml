@@ -146,7 +146,7 @@ jobs:
       - run:
           name: "install dependencies"
           command: |
-            sudo apk update
+            apk update
 
             apk add tar gzip awscli ansible
       - run:
