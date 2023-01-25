@@ -148,7 +148,7 @@ jobs:
           command: |
             apk update
 
-            apk add tar gzip awscli ansible
+            apk add tar gzip aws-cli ansible
       - run:
           name: "run playbook"
           command: |
