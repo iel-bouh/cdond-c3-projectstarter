@@ -149,7 +149,7 @@ jobs:
             apk add tar gzip aws-cli ansible
 
       - attach_workspace:
-          at: ~/project/.circleci/ansible/inventory.txt
+          at: ~/
       - run:
           name: "run playbook"
           command: |
