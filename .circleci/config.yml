@@ -168,7 +168,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apt -y install  gzip tar python3 ansible aws-cli
+            sudo apt -y install  gzip tar python3 ansible aws-cli
       - restore_cache:
           keys: [backend-build]
       - run:
@@ -195,7 +195,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apt -y install  gzip tar python3 ansible aws-cli
+            sudo apt -y install  gzip tar python3 ansible aws-cli
       - attach_workspace:
           at: ~/
       - run:
