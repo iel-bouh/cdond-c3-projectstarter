@@ -152,6 +152,7 @@ jobs:
           at: ~/
       - run:
           name: "run playbook"
+          no_output_timeout: 30m
           command: |
             cd .circleci/ansible
             cat inventory.txt
