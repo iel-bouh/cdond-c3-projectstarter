@@ -156,7 +156,7 @@ jobs:
             cd .circleci/ansible
             cat inventory.txt
             ansible-playbook -i inventory.txt configure-server.yml
-          no_output_timeout: 700s
+          no_output_timeout: 70s
       - destroy-environment:
           ID: "${CIRCLE_WORKFLOW_ID:0:7}"
 
