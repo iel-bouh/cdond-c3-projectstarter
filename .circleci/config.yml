@@ -228,6 +228,46 @@ jobs:
       - destroy-environment:
           ID: "${CIRCLE_WORKFLOW_ID:0:7}"
 
+  deploy-backend:
+    docker:
+      - image: circleci/node:13.8.0
+
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints: [
+              "7e:81:2a:18:98:79:81:13:9a:13:df:44:d0:4f:e1:b2
+
+              ",
+            ]
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: "install dependencies"
+          command: |
+            sudo apt update
+            sudo apt -y install tar gzip python3 ansible
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
+      - restore_cache:
+          keys: [frontend-build]
+      - run:
+          name: Deploy backend
+          command: |
+            cd backend
+            npm i
+            npm run build
+            cd ..
+            # Zip the directory
+            tar -C backend -czvf artifact.tar.gz .
+            cd .circleci/ansible
+            echo "Contents  of the inventory.txt file is -------"
+            cat inventory.txt
+            ansible-playbook -i inventory.txt deploy-backend.yml
+      - destroy-environment:
+          ID: "${CIRCLE_WORKFLOW_ID:0:7}"
+
 workflows:
   default:
     jobs:
@@ -248,4 +288,6 @@ workflows:
       - run-migrations:
           requires: [configure-infrastructure]
       - deploy-frontend:
+          requires: [run-migrations]
+      - deploy-backend:
           requires: [run-migrations]
