@@ -157,7 +157,6 @@ jobs:
       - add_ssh_keys:
           fingerprints: [
               "7e:81:2a:18:98:79:81:13:9a:13:df:44:d0:4f:e1:b2
-
               ",
             ]
       - run:
@@ -256,7 +255,6 @@ jobs:
       - add_ssh_keys:
           fingerprints: [
               "7e:81:2a:18:98:79:81:13:9a:13:df:44:d0:4f:e1:b2
-
               ",
             ]
       - attach_workspace:
@@ -284,8 +282,8 @@ jobs:
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
-      - destroy-environment:
-          ID: "${CIRCLE_WORKFLOW_ID:0:7}"
+      # - destroy-environment:
+      #     ID: "${CIRCLE_WORKFLOW_ID:0:7}"
 
   smoke-test:
     docker:
@@ -328,6 +326,53 @@ jobs:
             fi
       - destroy-environment:
           ID: "${CIRCLE_WORKFLOW_ID:0:7}"
+
+  cloudfront-update:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            # your code here
+      - run:
+          name: Update cloudfront distribution
+          command: |
+            aws cloudformation deploy \
+            --template-file .circleci/files/cloudfront.yml \
+            --stack-name InitialStack \
+            --parameter-overrides WorkflowID="udapeople-${CIRCLE_WORKFLOW_ID:0:7}" \
+            --tags project=udapeople
+      # Here's where you will add some code to rollback on failure
+      - destroy-environment:
+          ID: "${CIRCLE_WORKFLOW_ID:0:7}"
+
+  cleanup:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      # Checkout code from git
+      - run:
+          name: Get old stack workflow id
+          command: |
+            # Fetch the Old workflow ID
+             export OldWorkflowID=$(aws cloudformation \
+                     list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
+                     --no-paginate --output text)
+             echo OldWorkflowID: "${OldWorkflowID}"
+             echo CIRCLE_WORKFLOW_ID "${CIRCLE_WORKFLOW_ID:0:7}"
+             # Fetch the stack names          
+             export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
+                     --stack-status-filter CREATE_COMPLETE --no-paginate --output text)) 
+             echo Stack names: "${STACKS[@]}"
+      - run:
+          name: Remove old stacks and files
+          command: |
+            if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
+            then
+              # your code here
+            fi
 workflows:
   default:
     jobs:
