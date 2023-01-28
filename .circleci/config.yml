@@ -262,7 +262,12 @@ jobs:
           command: |
             apk update
 
-            apk add tar gzip aws-cli ansible node@13.8.0
+            apk add tar gzip aws-cli ansible
+            apk add -U curl bash ca-certificates openssl ncurses coreutils python2 make gcc g++ libgcc linux-headers grep util-linux binutils findutils
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            nvm install 13.8.0
       - restore_cache:
           keys: [backend-build]
       - attach_workspace:
