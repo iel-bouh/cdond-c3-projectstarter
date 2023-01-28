@@ -6,7 +6,7 @@
 
 - name: "copy file to server"
   copy:
-    src: artifact.tar.gz
+    src: ~/project/artifact.tar.gz
     dest: ~/web
 
 - name: Extract foo.tgz into /var/lib/foo
