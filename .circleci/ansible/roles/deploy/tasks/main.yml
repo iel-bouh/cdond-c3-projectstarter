@@ -1,7 +1,12 @@
 ---
+- name: "copy file to server"
+  copy:
+    src: ~/project/artifact.tar.gz
+    dest: ~/
+
 - name: Extract foo.tgz into /var/lib/foo
   unarchive:
-    src: ~/project/artifact.tar.gz
+    src: ~/artifact.tar.gz
     dest: ~/
 
 - name: "start server"
