@@ -248,7 +248,7 @@ jobs:
 
   deploy-backend:
     docker:
-      - image: alpine
+      - image: circleci/node:13.8.0
 
     steps:
       - checkout
@@ -257,20 +257,18 @@ jobs:
               "7e:81:2a:18:98:79:81:13:9a:13:df:44:d0:4f:e1:b2
               ",
             ]
+
       - run:
           name: "install dependencies"
           command: |
-            apk update
-
-            apk add  tar 
-            apk add gzip 
-            apk add aws-cli 
-            apk add ansible
-            apk add -U curl bash ca-certificates openssl ncurses coreutils python2 make gcc g++ libgcc linux-headers grep util-linux binutils findutils
-            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            nvm install 13.8.0
+            sudo apt update
+            sudo apt install software-properties-common
+            sudo add-apt-repository --yes --update ppa:ansible/ansible
+            sudo apt install ansible
+            sudo apt -y install tar gzip python3 ansible
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
       - restore_cache:
           keys: [backend-build]
       - attach_workspace:
