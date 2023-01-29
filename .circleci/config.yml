@@ -11,6 +11,7 @@ commands:
           name: Destroy environments
           when: on_fail
           command: |
+            aws s3 rm "s3://udapeople-<<parameters.ID>>" --recursive
             aws cloudformation delete-stack --stack-name "udapeople-backend-<<parameters.ID>>"
             aws cloudformation delete-stack --stack-name "udapeople-frontend-<<parameters.ID>>"
   revert-migrations:
@@ -24,7 +25,7 @@ commands:
           when: on_fail
           command: |
             # Example: kvdb.io
-            SUCCESS=$(curl --insecure  https://kvdb.io/9GE4jRtKznmVKRfvdBABBe/migration_<< parameters.ID >>)
+            SUCCESS=$(curl --insecure  https://kvdb.io/J6xgWopqMwaZRMDPQygRAs/migration_<< parameters.ID >>)
             # Logic for reverting the database state
             if (( $SUCCESS == 1 ));
             then
