@@ -295,14 +295,3 @@ workflows:
       - cleanup:
           requires: [cloudfront-update]
 
-export BACKEND_IP=$( aws ec2 describe-instances --filters "Name=tag:Name,Values=backend-216bd0ee" --query "Reservations[].Instances[].PublicIpAddress" \
-  --output text )
-echo $BACKEND_IP
-export API_URL="http://${BACKEND_IP}:3030"
-echo "${API_URL}"
-if curl "${API_URL}/api/status" | grep "ok"
-then
-    return 0
-else
-    return 1
-fi
