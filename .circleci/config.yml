@@ -24,7 +24,7 @@ commands:
           when: on_fail
           command: |
             # Example: kvdb.io
-            SUCCESS=$(curl --insecure  https://kvdb.io/9GE4jRtKznmVKRfvdBABBe/migration_<< parameters.workflow_id >>)
+            SUCCESS=$(curl --insecure  https://kvdb.io/9GE4jRtKznmVKRfvdBABBe/migration_<< parameters.ID >>)
             # Logic for reverting the database state
             if (( $SUCCESS == 1 ));
             then
