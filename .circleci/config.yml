@@ -243,7 +243,7 @@ jobs:
 
       - destroy-environment:
           ID: "${CIRCLE_WORKFLOW_ID:0:7}"
-      - revert-migrations:
+      - revert-migrations
 
   deploy-backend:
     docker:
@@ -285,7 +285,7 @@ jobs:
             ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory.txt deploy-backend.yml
       - destroy-environment:
           ID: "${CIRCLE_WORKFLOW_ID:0:7}"
-      - revert-migrations:
+      - revert-migrations
 
   smoke-test:
     docker:
@@ -328,7 +328,7 @@ jobs:
             fi
       - destroy-environment:
           ID: "${CIRCLE_WORKFLOW_ID:0:7}"
-      - revert-migrations:
+      - revert-migrations
 
   cloudfront-update:
     docker:
@@ -350,7 +350,7 @@ jobs:
       # Here's where you will add some code to rollback on failure
       - destroy-environment:
           ID: "${CIRCLE_WORKFLOW_ID:0:7}"
-      - revert-migrations:
+      - revert-migrations
 
   cleanup:
     docker:
