@@ -16,16 +16,13 @@ commands:
             aws cloudformation delete-stack --stack-name "udapeople-frontend-<<parameters.ID>>"
   revert-migrations:
     description: Revert the last migration
-    parameters:
-      ID:
-        type: string
     steps:
       - run:
           name: Revert migrations
           when: on_fail
           command: |
             # Example: kvdb.io
-            SUCCESS=$(curl --insecure  https://kvdb.io/J6xgWopqMwaZRMDPQygRAs/migration_<< parameters.ID >>)
+            SUCCESS=$(curl --insecure  https://kvdb.io/J6xgWopqMwaZRMDPQygRAs/migration_$\{CIRCLE_WORKFLOW_ID:0:7\})
             # Logic for reverting the database state
             if (( $SUCCESS == 1 ));
             then
