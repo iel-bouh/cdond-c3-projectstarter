@@ -306,6 +306,8 @@ jobs:
             echo $BACKEND_IP
             export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}"
+            sleep 50s
+
             if curl "${API_URL}/api/status" | grep "ok"
             then
                 return 0
@@ -317,6 +319,7 @@ jobs:
           command: |
             URL="http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com/#/employees"            
             echo ${URL} 
+            sleep 50s
             if curl -s ${URL} | grep "Welcome"
             then
                 # Change this to 0 after the job fails
