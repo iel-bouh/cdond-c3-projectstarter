@@ -370,6 +370,7 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
+      - run: yum -y install  gzip tar
       - attach_workspace:
           at: ~/
       - run:
@@ -384,6 +385,9 @@ jobs:
             else
               return 1
             fi
+      - destroy-environment:
+          ID: "${CIRCLE_WORKFLOW_ID:0:7}"
+      - revert-migrations
 
 workflows:
   default:
