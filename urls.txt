@@ -1,2 +1,2 @@
 URL01: https://github.com/iel-bouh/cdond-c3-projectstarter
-URL02: http://udapeople-46711e1.s3-website-us-east-1.amazonaws.com
+URL02: http://udapeople-0a4f1d7.s3-website-us-east-1.amazonaws.com/
